@@ -13,7 +13,9 @@ DEVELOPER_USERNAME = "@zzpp_p"
 DEVELOPER_INFO = f"Bot Developer: {DEVELOPER_USERNAME}"
 # --- Channel Subscription Configuration ---
 CHANNEL_ID = "@aiiichat" # <<<< IMPORTANT: Your target channel username (e.g., @channelname) or ID (e.g., -100123456789)
-CHANNEL_LINK = f"https://t.me/{CHANNEL_ID.lstrip("@")}" # Auto-generated link for the user to join
+# Ensure compatibility with older Python f-string parsing by pre-calculating the stripped ID
+_channel_name_for_link = CHANNEL_ID.lstrip('@')
+CHANNEL_LINK = f"https://t.me/{_channel_name_for_link}" # Auto-generated link for the user to join
 
 # AI API Configuration
 AI_API_URL = "https://pdf-ai-summarizer.toolzflow.app/api/chat/public"
@@ -24,9 +26,9 @@ AI_API_HEADERS = {
     'origin': 'https://pdf-ai-summarizer.toolzflow.app',
     'priority': 'u=1, i',
     'referer': 'https://pdf-ai-summarizer.toolzflow.app/',
-    'sec-ch-ua': '"Google Chrome";v="135", "Not-A.Brand";v="8", "Chromium";v="135"',
+    'sec-ch-ua': '\"Google Chrome\";v=\"135\", \"Not-A.Brand\";v=\"8\", \"Chromium\";v=\"135\"',
     'sec-ch-ua-mobile': '?0',
-    'sec-ch-ua-platform': '"Windows"',
+    'sec-ch-ua-platform': '\"Windows\"',
     'sec-fetch-dest': 'empty',
     'sec-fetch-mode': 'cors',
     'sec-fetch-site': 'same-origin',
@@ -270,7 +272,7 @@ def greet_new_member(message: types.Message):
 
 # --- Main Execution ---
 if __name__ == '__main__':
-    logger.info("Starting bot with message limit, user stats, and channel subscription check...")
+    logger.info("Starting bot v5 (f-string fix) with message limit, user stats, and channel subscription check...")
     try:
         bot.infinity_polling(logger_level=logging.INFO) # Use infinity_polling for continuous running
     except Exception as e:
